@@ -1,4 +1,4 @@
 import "./styles/styles.css";
-import UI from "./modules/Ui.js";
+import UI from "./modules/uiManager.js"
 
 UI.initialiseUI();
