@@ -28,3 +28,26 @@ p, h1, h2, h3, h4, h5, h6 {
 #root, #__next {
     isolation: isolate;
 }
+
+/* COMMON STYLING */
+body {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.app {
+    width: 100%;
+    height: 100%;
+}
+
+/* SIDEBAR */
+.sidebar {
+    background-color: khaki;
+}
+
+/* MAIN CONTENT */
+.content {
+    background-color: blue;
+}
