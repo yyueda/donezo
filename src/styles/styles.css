@@ -30,6 +30,12 @@ p, h1, h2, h3, h4, h5, h6 {
 }
 
 /* COMMON STYLING */
+:root {
+    --black: rgb(25, 25, 25);
+    --grey: rgb(32, 32, 32);
+    --light-grey: rgb(146, 146, 146);
+}
+
 body {
     width: 100vw;
     height: 100vh;
@@ -40,14 +46,21 @@ body {
 .app {
     width: 100%;
     height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 6fr;
 }
 
 /* SIDEBAR */
 .sidebar {
-    background-color: khaki;
+    background-color: var(--grey);
+    color: var(--light-grey);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
 }
 
 /* MAIN CONTENT */
 .content {
-    background-color: blue;
+    background-color: var(--black);
 }
