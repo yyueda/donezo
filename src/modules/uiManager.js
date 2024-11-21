@@ -1,4 +1,5 @@
 import localStorageManager from "./localStorage.js";
+import addIcon from "../images/add.svg";
 
 const UI = (function () {
     
@@ -24,7 +25,7 @@ const UI = (function () {
 
         // Logo Section
         const logo = document.createElement("div");
-        const logoHeader = document.createElement("h2");
+        const logoHeader = document.createElement("div");
         logoHeader.textContent = "Donezo";
         logo.appendChild(logoHeader);
         logo.classList.add("logo");
@@ -49,12 +50,11 @@ const UI = (function () {
 
     const createProjectSection = () => {
         const projectsSection = document.createElement("div");
-        const projectsHeader = document.createElement("h3");
+        const projectsHeader = createProjectHeader();
         const projectsContainer = document.createElement("div");
 
-        projectsHeader.textContent = "Projects";
         projectsSection.appendChild(projectsHeader);
-        projectsSection.classList.add("projects")
+        projectsSection.classList.add("projects");
 
         const projects = localStorageManager.loadProjectsFromLocalStorage();
         projects.forEach(project => {
@@ -63,6 +63,24 @@ const UI = (function () {
         projectsSection.appendChild(projectsContainer);
 
         return projectsSection;
+    };
+
+    const createProjectHeader = () => {
+        const projectsHeaderContainer = document.createElement("div");
+        const projectsHeader = document.createElement("span");
+        const buttonsContainer = document.createElement("div");
+        const addButtonIcon = document.createElement("img");
+
+        projectsHeader.textContent = "Projects";
+        addButtonIcon.src = addIcon;
+        buttonsContainer.appendChild(addButtonIcon);
+
+        projectsHeaderContainer.classList.add("projects-header");
+
+        projectsHeaderContainer.appendChild(projectsHeader);
+        projectsHeaderContainer.appendChild(buttonsContainer);
+
+        return projectsHeaderContainer;
     };
 
     const createProjectItem = (project) => {

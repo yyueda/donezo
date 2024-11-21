@@ -60,6 +60,16 @@ body {
     gap: 40px;
 }
 
+.projects-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.projects-header img {
+    width: 24px;
+    height: auto;
+}
+
 /* MAIN CONTENT */
 .content {
     background-color: var(--black);
