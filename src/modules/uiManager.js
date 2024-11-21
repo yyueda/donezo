@@ -1,8 +1,9 @@
+import localStorageManager from "./localStorage.js";
+
 const UI = (function () {
     
     const initialiseUI = () => {
         createHomePage();
-        console.log("Test");
     };
 
     const createHomePage = () => {
@@ -29,14 +30,10 @@ const UI = (function () {
         logo.classList.add("logo");
 
         // Projects Section
-        const projectsContainer = document.createElement("div");
-        const projectsHeader = document.createElement("h3");
-        projectsHeader.textContent = "Projects";
-        projectsContainer.appendChild(projectsHeader);
-        projectsContainer.classList.add("projects")
+        const projectsSection = createProjectSection();
 
         sidebar.appendChild(logo);
-        sidebar.appendChild(projectsContainer)
+        sidebar.appendChild(projectsSection);
 
         sidebar.classList.add("sidebar");
 
@@ -49,6 +46,30 @@ const UI = (function () {
 
         return content;
     }
+
+    const createProjectSection = () => {
+        const projectsSection = document.createElement("div");
+        const projectsHeader = document.createElement("h3");
+        const projectsContainer = document.createElement("div");
+
+        projectsHeader.textContent = "Projects";
+        projectsSection.appendChild(projectsHeader);
+        projectsSection.classList.add("projects")
+
+        const projects = localStorageManager.loadProjectsFromLocalStorage();
+        projects.forEach(project => {
+            projectsContainer.appendChild(createProjectItem(project));
+        });
+        projectsSection.appendChild(projectsContainer);
+
+        return projectsSection;
+    };
+
+    const createProjectItem = (project) => {
+        const projectElement = document.createElement("div");
+        projectElement.textContent = project.getName();
+        return projectElement;
+    };
 
     return { initialiseUI };
 })();

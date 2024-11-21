@@ -11,7 +11,7 @@ const localStorageManager = (function () {
         const projectsData = JSON.parse(localStorage.getItem("projects"));
 
         if (!projectsData) {
-            const choresProject = createProject({ name: "chores" });
+            const choresProject = createProject("chores");
             const cleanTodo = createTodo({
                 title: "Clean Up",
                 description: "Make the bed and clean the toilet",
@@ -25,17 +25,22 @@ const localStorageManager = (function () {
 
             return defaultProjects
         }
-    }
 
-    return projectsData.map(projectData => {
-        const project = createProject(projectData.name);
-        projectData.listofTodos.forEach(todoData => {
-            const todo = createTodo(...todoData);
-            project.addTodo(todo);
+        return projectsData.map(projectData => {
+            const project = createProject(projectData.name);
+            projectData.listOfTodos.forEach(todoData => {
+                const todo = createTodo(
+                    todoData.title,
+                    todoData.description,
+                    todoData.dueDate,
+                    todoData.priority
+                );
+                project.addTodo(todo);
+            });
+
+            return project;
         });
-
-        return project;
-    });
+    }
 
     return { addProjectsToLocalStorage, loadProjectsFromLocalStorage };
 })();
