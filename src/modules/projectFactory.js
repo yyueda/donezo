@@ -1,4 +1,4 @@
-function createProject({ name }) {
+function createProject(name) {
     let _name = name;
     let _listOfTodos = [];
 
@@ -15,7 +15,12 @@ function createProject({ name }) {
 
     const getListOfTodos = () => [..._listOfTodos];
 
-    return { getName, setName }
+    const toJSON = () => ({
+        name: _name,
+        listOfTodos: _listOfTodos.map(todo => todo.toJSON())
+    });
+
+    return { getName, setName, addTodo, getListOfTodos, toJSON }
 }
 
 export default createProject;
