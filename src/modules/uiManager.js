@@ -1,6 +1,7 @@
 import localStorageManager from "./localStorage.js";
 import projectManager from "./projectManager.js";
 import addIcon from "../images/add.svg";
+import deleteIcon from "../images/bin.svg";
 
 const UI = (function () {
     let projectsContainer;
@@ -91,14 +92,17 @@ const UI = (function () {
 
     const createProjectItem = (project) => {
         const projectElement = document.createElement("div");
-        projectElement.textContent = project.getName();
-        return projectElement;
-    };
+        const projectName = document.createElement("span");
+        projectName.textContent = project.getName();
+        projectElement.setAttribute("data-id", project.getId());
 
-    const handleAddClick = () => {
-        const project = projectManager.addProject("New Project");
-        const projectElement = createProjectItem(project);
-        projectsContainer.appendChild(projectElement);
+        // Delete Button
+        const deleteButton = createButtonWithIcon(deleteIcon, "delete-btn", () => handleDeleteClick(project.getId()));
+
+        projectElement.appendChild(projectName);
+        projectElement.appendChild(deleteButton)
+
+        return projectElement;
     };
 
     const createButtonWithIcon = (iconSrc, className, onClick) => {
@@ -107,6 +111,21 @@ const UI = (function () {
         buttonIcon.src = iconSrc;
         buttonIcon.addEventListener("click", onClick);
         return buttonIcon;
+    };
+
+    const handleAddClick = () => {
+        const project = projectManager.addProject("New Project");
+        const projectElement = createProjectItem(project);
+        projectsContainer.appendChild(projectElement);
+    };
+
+    const handleDeleteClick = (id) => {
+        projectManager.deleteProject(id);
+
+        const projectElement = document.querySelector(`[data-id="${id}"]`);
+        if (projectElement) {
+            projectElement.remove();
+        }
     };
 
     return { initialiseUI };

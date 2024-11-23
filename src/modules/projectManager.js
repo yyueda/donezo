@@ -18,7 +18,15 @@ const projectManager = (function () {
         return project;
     };
 
-    return { loadProjects, getProjects, addProject };
+    const deleteProject = (id) => {
+        projects = projects.filter((project) => {
+            return project.getId() !== id;
+        });
+
+        localStorageManager.updateProjectsInLocalStorage(projects);
+    };
+
+    return { loadProjects, getProjects, addProject, deleteProject };
 })();
 
 export default projectManager;

@@ -25,7 +25,7 @@ function createProject(name) {
         listOfTodos: _listOfTodos.map(todo => todo.toJSON())
     });
 
-    return { getName, setName, addTodo, getListOfTodos, toJSON }
+    return { getId, getName, setName, addTodo, getListOfTodos, toJSON }
 }
 
 export default createProject;
