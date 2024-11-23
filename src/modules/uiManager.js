@@ -1,22 +1,23 @@
 import localStorageManager from "./localStorage.js";
+import projectManager from "./projectManager.js";
 import addIcon from "../images/add.svg";
 
 const UI = (function () {
+    let projectsContainer;
     
     const initialiseUI = () => {
+        projectManager.loadProjects();
         createHomePage();
     };
 
     const createHomePage = () => {
         const body = document.querySelector("body");
         const app = document.createElement("div");
-        const sidebar = createSidebar();
-        const content = createMainContent();
 
         app.classList.add("app");
 
-        app.appendChild(sidebar);
-        app.appendChild(content)
+        app.appendChild(createSidebar());
+        app.appendChild(createMainContent());
         body.append(app);
     }
 
@@ -49,34 +50,39 @@ const UI = (function () {
     }
 
     const createProjectSection = () => {
+        // Project Section Header
         const projectsSection = document.createElement("div");
-        const projectsHeader = createProjectHeader();
-        const projectsContainer = document.createElement("div");
-
-        projectsSection.appendChild(projectsHeader);
+        projectsSection.appendChild(createProjectHeader());
         projectsSection.classList.add("projects");
 
-        const projects = localStorageManager.loadProjectsFromLocalStorage();
+        // Rendering projects in section
+        projectsContainer = document.createElement("div");
+        const projects = projectManager.getProjects();
+
         projects.forEach(project => {
             projectsContainer.appendChild(createProjectItem(project));
         });
+        projectsContainer.classList.add("projects-container");
+
         projectsSection.appendChild(projectsContainer);
 
         return projectsSection;
     };
 
     const createProjectHeader = () => {
-        const projectsHeaderContainer = document.createElement("div");
+        // Projects Header
         const projectsHeader = document.createElement("span");
-        const buttonsContainer = document.createElement("div");
-        const addButtonIcon = document.createElement("img");
-
         projectsHeader.textContent = "Projects";
-        addButtonIcon.src = addIcon;
-        buttonsContainer.appendChild(addButtonIcon);
 
+        // Add Button
+        const addButton = createButtonWithIcon(addIcon, "add-btn", handleAddClick);
+
+        // Buttons Container
+        const buttonsContainer = document.createElement("div");
+        buttonsContainer.appendChild(addButton);
+
+        const projectsHeaderContainer = document.createElement("div");
         projectsHeaderContainer.classList.add("projects-header");
-
         projectsHeaderContainer.appendChild(projectsHeader);
         projectsHeaderContainer.appendChild(buttonsContainer);
 
@@ -87,6 +93,20 @@ const UI = (function () {
         const projectElement = document.createElement("div");
         projectElement.textContent = project.getName();
         return projectElement;
+    };
+
+    const handleAddClick = () => {
+        const project = projectManager.addProject("New Project");
+        const projectElement = createProjectItem(project);
+        projectsContainer.appendChild(projectElement);
+    };
+
+    const createButtonWithIcon = (iconSrc, className, onClick) => {
+        const buttonIcon = document.createElement("img");
+        buttonIcon.classList.add(className);
+        buttonIcon.src = iconSrc;
+        buttonIcon.addEventListener("click", onClick);
+        return buttonIcon;
     };
 
     return { initialiseUI };
