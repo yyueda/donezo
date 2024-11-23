@@ -2,7 +2,7 @@ import createProject from "./projectFactory.js";
 import createTodo from "./todoFactory.js";
 
 const localStorageManager = (function () {
-    const addProjectsToLocalStorage = (projects) => {
+    const updateProjectsInLocalStorage = (projects) => {
         const serialisedProjects = projects.map(project => project.toJSON());
         localStorage.setItem("projects", JSON.stringify(serialisedProjects));
     };
@@ -21,7 +21,7 @@ const localStorageManager = (function () {
             choresProject.addTodo(cleanTodo);
 
             const defaultProjects = [choresProject];
-            addProjectsToLocalStorage(defaultProjects);
+            updateProjectsInLocalStorage(defaultProjects);
 
             return defaultProjects
         }
@@ -42,7 +42,7 @@ const localStorageManager = (function () {
         });
     }
 
-    return { addProjectsToLocalStorage, loadProjectsFromLocalStorage };
+    return { updateProjectsInLocalStorage, loadProjectsFromLocalStorage };
 })();
 
 export default localStorageManager;

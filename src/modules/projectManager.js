@@ -13,7 +13,7 @@ const projectManager = (function () {
     const addProject = (name) => {
         const project = createProject(name);
         projects.push(project);
-        localStorageManager.addProjectsToLocalStorage(projects);
+        localStorageManager.updateProjectsInLocalStorage(projects);
 
         return project;
     };
