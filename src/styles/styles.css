@@ -108,7 +108,27 @@ body {
     overflow-y: auto;
 }
 
+.project-content {
+    color: var(--light-grey);
+    margin-top: 44px;
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+}
+
+.project-content > h1 {
+    border: 1px solid transparent;
+}
+
+.project-content > h1:hover {
+    border-color: rgba(146, 146, 146, 0.2);
+}
+
+.project-content > h1, .project-name-input {
+    grid-column: 2 / 3;
+}
+
 .project-name-input {
+    color: var(--light-grey);
     padding: 0;
     font-size: 2rem;
     font-weight: bold;
