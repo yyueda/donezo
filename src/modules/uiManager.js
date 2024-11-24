@@ -98,6 +98,10 @@ const UI = (function () {
         projectElement.setAttribute("data-id", project.getId());
         projectElement.classList.add("project-item");
 
+        projectElement.addEventListener("click", (e) => {
+            handleProjectElementClick(project);
+        });
+
         // Delete Button
         const deleteButton = createButtonWithIcon(deleteIcon, "delete-btn", () => handleDeleteClick(project.getId()));
 
@@ -107,12 +111,31 @@ const UI = (function () {
         return projectElement;
     };
 
+    const createProjectContent = (project) => {
+        const projectContent = document.createElement("div");
+        const projectName = document.createElement("h1");
+
+        projectName.textContent = project.getName();
+
+        projectContent.appendChild(projectName);
+
+        return projectContent;
+    };
+
     const createButtonWithIcon = (iconSrc, className, onClick) => {
         const buttonIcon = document.createElement("img");
         buttonIcon.classList.add(className);
         buttonIcon.src = iconSrc;
         buttonIcon.addEventListener("click", onClick);
         return buttonIcon;
+    };
+
+    const handleProjectElementClick = (project) => {
+        const projectContent = createProjectContent(project);
+        const contentContainer = document.querySelector(".content");
+
+        contentContainer.innerHTML = "";
+        contentContainer.appendChild(projectContent);
     };
 
     const handleAddClick = () => {

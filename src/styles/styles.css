@@ -102,4 +102,5 @@ body {
 /* MAIN CONTENT */
 .content {
     background-color: var(--black);
+    overflow-y: auto;
 }
