@@ -41,6 +41,7 @@ body {
     height: 100vh;
     display: flex;
     flex-direction: column;
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 .app {
@@ -58,11 +59,13 @@ body {
     display: flex;
     flex-direction: column;
     gap: 40px;
+    font-size: 0.9rem;
 }
 
 .projects-header {
     display: flex;
     justify-content: space-between;
+    font-weight: 500;
 }
 
 .projects-header, .projects-container > div {
