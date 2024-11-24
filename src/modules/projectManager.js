@@ -26,7 +26,12 @@ const projectManager = (function () {
         localStorageManager.updateProjectsInLocalStorage(projects);
     };
 
-    return { loadProjects, getProjects, addProject, deleteProject };
+    const addTodoToProject = (project, todo) => {
+        project.addTodo(todo);
+        localStorageManager.updateProjectsInLocalStorage(projects);
+    };    
+
+    return { loadProjects, getProjects, addProject, deleteProject, addTodoToProject };
 })();
 
 export default projectManager;

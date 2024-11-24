@@ -1,5 +1,6 @@
 import localStorageManager from "./localStorage.js";
 import projectManager from "./projectManager.js";
+import todoManager from "./todoManager.js";
 import addIcon from "../images/add.svg";
 import deleteIcon from "../images/bin.svg";
 
