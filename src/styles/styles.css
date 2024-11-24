@@ -140,3 +140,29 @@ body {
 .project-name-input:focus {
     outline: none;
 }
+
+.create-task-btn {
+    color: #808080;
+    grid-column: 2 / 3;
+    border: none;
+    background: none;
+    display: flex;
+    gap: 4px;
+    cursor: pointer;
+    align-items: center;
+    padding: 8px;
+}
+
+.create-task-btn > svg {
+    color: #ff1700;
+}
+
+.create-task-btn:hover {
+    color: #ff1700;
+}
+
+.create-task-btn:hover > svg {
+    background-color: #dc4c3e;
+    border-radius: 50%;
+    color: #ffffff;
+}

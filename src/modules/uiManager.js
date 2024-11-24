@@ -141,7 +141,7 @@ const UI = (function () {
         const buttonText = document.createTextNode("Create Task");
 
         addTaskButton.innerHTML = `
-            <svg fill="#929292" width="100px" height="100px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" stroke="#929292">
+            <svg fill="currentColor" width="24px" height="24px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" stroke="currentColor">
             <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
             </g>
             <g id="SVGRepo_iconCarrier">
@@ -150,6 +150,7 @@ const UI = (function () {
             </svg>
         `;
         addTaskButton.appendChild(buttonText);
+        addTaskButton.classList.add("create-task-btn");
 
         return addTaskButton;
     };
