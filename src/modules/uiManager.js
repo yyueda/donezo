@@ -80,6 +80,7 @@ const UI = (function () {
 
         // Buttons Container
         const buttonsContainer = document.createElement("div");
+        buttonsContainer.classList.add("btn-container");
         buttonsContainer.appendChild(addButton);
 
         const projectsHeaderContainer = document.createElement("div");
@@ -95,6 +96,7 @@ const UI = (function () {
         const projectName = document.createElement("span");
         projectName.textContent = project.getName();
         projectElement.setAttribute("data-id", project.getId());
+        projectElement.classList.add("project-item");
 
         // Delete Button
         const deleteButton = createButtonWithIcon(deleteIcon, "delete-btn", () => handleDeleteClick(project.getId()));

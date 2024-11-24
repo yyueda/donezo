@@ -69,13 +69,14 @@ body {
     cursor: pointer;
     padding: 4px 8px;
     border-radius: 6px;
+    transition: background-color 20ms ease-in;
 }
 
-.projects-header:hover, .projects-container > div:hover {
+.projects-header:hover, .projects-container > div:hover, .add-btn:hover, .delete-btn:hover {
     background-color: rgba(255, 255, 255, 0.055);
 }
 
-.projects-container > div {
+.project-item {
     display: flex;
     justify-content: space-between;
 }
@@ -85,10 +86,17 @@ body {
     height: auto;
     cursor: pointer;
     border-radius: 4px;
+    transition: background-color 20ms ease-in;
 }
 
-.add-btn:hover, .delete-btn:hover {
-    background-color: rgba(255, 255, 255, 0.055);
+.btn-container, .project-item > img {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.projects-header:hover .btn-container, .project-item:hover > img {
+    opacity: 1;
+    pointer-events: auto;
 }
 
 /* MAIN CONTENT */
