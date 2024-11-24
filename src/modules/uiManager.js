@@ -123,6 +123,7 @@ const UI = (function () {
 
         projectContent.classList.add("project-content");
         projectContent.appendChild(projectName);
+        projectContent.appendChild(createAddTaskButton());
 
         return projectContent;
     };
@@ -133,6 +134,24 @@ const UI = (function () {
         buttonIcon.src = iconSrc;
         buttonIcon.addEventListener("click", onClick);
         return buttonIcon;
+    };
+
+    const createAddTaskButton = () => {
+        const addTaskButton = document.createElement("button");
+        const buttonText = document.createTextNode("Create Task");
+
+        addTaskButton.innerHTML = `
+            <svg fill="#929292" width="100px" height="100px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" stroke="#929292">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
+            </g>
+            <g id="SVGRepo_iconCarrier">
+            <path d="M9,17h6v6a1,1,0,0,0,2,0V17h6a1,1,0,0,0,0-2H17V9a1,1,0,0,0-2,0v6H9a1,1,0,0,0,0,2Z"></path>
+            </g>
+            </svg>
+        `;
+        addTaskButton.appendChild(buttonText);
+
+        return addTaskButton;
     };
 
     const handleProjectElementClick = (project) => {
