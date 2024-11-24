@@ -94,7 +94,7 @@ const UI = (function () {
     const createProjectItem = (project) => {
         const projectElement = document.createElement("div");
         const projectName = document.createElement("span");
-        projectName.textContent = project.getName();
+        projectName.textContent = `# ${project.getName()}`;
         projectElement.setAttribute("data-id", project.getId());
         projectElement.classList.add("project-item");
 
@@ -116,7 +116,11 @@ const UI = (function () {
         const projectName = document.createElement("h1");
 
         projectName.textContent = project.getName();
+        projectName.addEventListener("click", () => {
+            handleProjectNameClick(project, projectContent, projectName);
+        });
 
+        projectContent.classList.add("project-content");
         projectContent.appendChild(projectName);
 
         return projectContent;
@@ -151,6 +155,27 @@ const UI = (function () {
         if (projectElement) {
             projectElement.remove();
         }
+    };
+
+    const handleProjectNameClick = (project, projectContentElement, projectHeaderElement) => {
+        const input = document.createElement("input");
+        input.type = "text";
+        input.value = project.getName();
+        input.classList.add("project-name-input");
+
+        projectContentElement.replaceChild(input, projectHeaderElement);
+        input.focus();
+
+        input.addEventListener("blur", () => {
+            const newName = input.value.trim();
+            if (newName) {
+                project.setName(newName);
+                projectHeaderElement.textContent = newName;
+                const projectElement = document.querySelector(`[data-id="${project.getId()}"]`);
+                projectElement.textContent = `# ${newName}`;
+            }
+            projectContentElement.replaceChild(projectHeaderElement, input)
+        });
     };
 
     return { initialiseUI };
