@@ -236,11 +236,19 @@ const UI = (function () {
 
         cancelButton.textContent = "Cancel";
         cancelButton.classList.add("cancel-btn");
+        cancelButton.addEventListener("click", (e) => {
+            e.preventDefault();
+            todoForm.remove();
+        });
+
         createButton.textContent = "Add Task";
         createButton.disabled = true;
         createButton.classList.add("add-task-btn");
-        buttonContainer.classList.add("form-btn-container");
+        createButton.addEventListener("click", (e) => {
+            e.preventDefault();
+        });
 
+        buttonContainer.classList.add("form-btn-container");
         buttonContainer.appendChild(cancelButton);
         buttonContainer.appendChild(createButton);
 
@@ -251,6 +259,7 @@ const UI = (function () {
         todoForm.appendChild(inputContainer);
         todoForm.appendChild(buttonContainer);
 
+        // Disable create button when name field has nothing
         const toggleCreateButton = () => {
             if (nameInput.value.trim() !== "") {
                 createButton.disabled = false;
