@@ -187,6 +187,10 @@ const UI = (function () {
         dueDateInput.id = "dueDate";
         dueDateInput.name = "dueDate";
 
+        const dueDateContainer = document.createElement("div");
+        dueDateContainer.appendChild(dueDateLabel);
+        dueDateContainer.appendChild(dueDateInput);
+
         // Dropdown to select priority
         const priorityInput = document.createElement("select");
         priorityInput.id = "priority";
@@ -205,11 +209,25 @@ const UI = (function () {
             priorityInput.appendChild(option);
         });
 
+        // Buttons
+        const buttonContainer = document.createElement("div");
+        const cancelButton = document.createElement("button");
+        const createButton = document.createElement("button");
+
+        cancelButton.textContent = "Cancel";
+        cancelButton.classList.add("cancel-btn");
+        createButton.textContent = "Add Task";
+        createButton.classList.add("add-task-btn");
+        buttonContainer.classList.add("form-btn-container");
+
+        buttonContainer.appendChild(cancelButton);
+        buttonContainer.appendChild(createButton);
+
         todoForm.appendChild(nameInput);
         todoForm.appendChild(descriptionInput);
-        todoForm.appendChild(dueDateLabel);
-        todoForm.appendChild(dueDateInput);
+        todoForm.appendChild(dueDateContainer);
         todoForm.appendChild(priorityInput);
+        todoForm.appendChild(buttonContainer);
 
         return todoForm;
     };
