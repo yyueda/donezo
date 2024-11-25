@@ -175,7 +175,7 @@ const UI = (function () {
         descriptionInput.type = "text";
         descriptionInput.id = "taskDescription";
         descriptionInput.name = "taskDescription";
-        descriptionInput.placeholder = "Description (optional)";
+        descriptionInput.placeholder = "Description";
 
         // Due Date
         const dueDateLabel = document.createElement("label");
@@ -192,6 +192,10 @@ const UI = (function () {
         dueDateContainer.appendChild(dueDateInput);
 
         // Dropdown to select priority
+        const priorityLabel = document.createElement("label");
+        priorityLabel.setAttribute("for", "priority");
+        priorityLabel.textContent = "Priority:"
+
         const priorityInput = document.createElement("select");
         priorityInput.id = "priority";
         priorityInput.name = "priority";
@@ -209,7 +213,12 @@ const UI = (function () {
             priorityInput.appendChild(option);
         });
 
-        // Buttons
+
+        const priorityContainer = document.createElement("div");
+        priorityContainer.appendChild(priorityLabel);
+        priorityContainer.appendChild(priorityInput);
+
+        // Form Buttons
         const buttonContainer = document.createElement("div");
         const cancelButton = document.createElement("button");
         const createButton = document.createElement("button");
@@ -226,7 +235,7 @@ const UI = (function () {
         todoForm.appendChild(nameInput);
         todoForm.appendChild(descriptionInput);
         todoForm.appendChild(dueDateContainer);
-        todoForm.appendChild(priorityInput);
+        todoForm.appendChild(priorityContainer);
         todoForm.appendChild(buttonContainer);
 
         return todoForm;
