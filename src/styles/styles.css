@@ -34,6 +34,9 @@ p, h1, h2, h3, h4, h5, h6 {
     --black: rgb(25, 25, 25);
     --grey: rgb(32, 32, 32);
     --light-grey: rgb(146, 146, 146);
+    --create-task-svg: #ff1700;
+    --create-task-svg-hover: #dc4c3e;
+    --add-btn-disabled: #eda59e;
 }
 
 body {
@@ -154,19 +157,103 @@ body {
 }
 
 .create-task-btn > svg {
-    color: #ff1700;
+    color: var(--create-task-svg);
 }
 
 .create-task-btn:hover {
-    color: #ff1700;
+    color: var(--create-task-svg-hover);
 }
 
 .create-task-btn:hover > svg {
-    background-color: #dc4c3e;
+    background-color: var(--create-task-svg-hover);
     border-radius: 50%;
     color: #ffffff;
 }
 
+/* FORM */
+.form-container {
+    grid-row: 3 / 4;
+    grid-column: 2 / 3;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
 .todo-form {
     grid-column: 2 / 3;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #808080;
+    border-radius: 8px;
+    background-color: #252525;
+}
+
+.input-container {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.input-container > input {
+    border: none;
+    background: none;
+    color: var(--light-grey);
+}
+
+.sec-input-container {
+    margin-top: 12px;
+    display: flex;
+    gap: 12px;
+}
+
+.sec-input-container > div {
+    display: flex;
+    gap: 4px;
+}
+
+.sec-input-container input, .sec-input-container select {
+    border: 1px solid #808080;
+    border-radius: 4px;
+    background: none;
+    color: var(--light-grey);
+}
+
+.form-btn-container {
+    display: flex;
+    justify-content: end;
+    gap: 12px;
+    border-top: 1px solid #808080;
+    padding: 12px;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.cancel-btn {
+    background-color: #f5f5f5;
+}
+
+.cancel-btn:hover {
+    background-color: #e5e5e5;
+}
+
+.add-task-btn {
+    background-color: var(--create-task-svg-hover);
+    color: #ffffff;
+}
+
+.add-task-btn:hover {
+    background-color: #df2f1f;
+}
+
+.add-task-btn:disabled {
+    background-color: var(--add-btn-disabled);
+    cursor: auto;
+}
+
+.cancel-btn, .add-task-btn {
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    padding: 4px 12px;
 }

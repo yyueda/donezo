@@ -113,15 +113,18 @@ const UI = (function () {
     const createProjectContent = (project) => {
         const projectContent = document.createElement("div");
         const projectName = document.createElement("h1");
+        const formContainer = document.createElement("div");
 
         projectName.textContent = project.getName();
         projectName.addEventListener("click", () => {
             handleProjectNameClick(project, projectContent, projectName);
         });
 
+        formContainer.classList.add("form-container");
         projectContent.classList.add("project-content");
         projectContent.appendChild(projectName);
         projectContent.appendChild(createAddTaskButton());
+        projectContent.appendChild(formContainer);
 
         return projectContent;
     };
@@ -151,15 +154,18 @@ const UI = (function () {
         addTaskButton.classList.add("create-task-btn");
 
         addTaskButton.addEventListener("click", () => {
-            const projectContentContainer = document.querySelector(".project-content");
-            projectContentContainer.appendChild(createTodoForm());
+            const formContainer = document.querySelector(".form-container");
+            formContainer.appendChild(createTodoForm());
         });
 
         return addTaskButton;
     };
 
     const createTodoForm = () => {
+        const formContainer = document.createElement("div");
         const todoForm = document.createElement("form");
+        const inputContainer = document.createElement("div");
+        inputContainer.classList.add("input-container");
         todoForm.classList.add("todo-form");
 
         // Task Name
@@ -213,10 +219,15 @@ const UI = (function () {
             priorityInput.appendChild(option);
         });
 
-
         const priorityContainer = document.createElement("div");
         priorityContainer.appendChild(priorityLabel);
         priorityContainer.appendChild(priorityInput);
+
+        // Container for due date and priority inputs
+        const secInputContainer = document.createElement("div");
+        secInputContainer.appendChild(dueDateContainer);
+        secInputContainer.appendChild(priorityContainer);
+        secInputContainer.classList.add("sec-input-container");
 
         // Form Buttons
         const buttonContainer = document.createElement("div");
@@ -226,17 +237,29 @@ const UI = (function () {
         cancelButton.textContent = "Cancel";
         cancelButton.classList.add("cancel-btn");
         createButton.textContent = "Add Task";
+        createButton.disabled = true;
         createButton.classList.add("add-task-btn");
         buttonContainer.classList.add("form-btn-container");
 
         buttonContainer.appendChild(cancelButton);
         buttonContainer.appendChild(createButton);
 
-        todoForm.appendChild(nameInput);
-        todoForm.appendChild(descriptionInput);
-        todoForm.appendChild(dueDateContainer);
-        todoForm.appendChild(priorityContainer);
+        // Appending to parent containers
+        inputContainer.appendChild(nameInput);
+        inputContainer.appendChild(descriptionInput);
+        inputContainer.appendChild(secInputContainer);
+        todoForm.appendChild(inputContainer);
         todoForm.appendChild(buttonContainer);
+
+        const toggleCreateButton = () => {
+            if (nameInput.value.trim() !== "") {
+                createButton.disabled = false;
+            } else {
+                createButton.disabled = true;
+            }
+        }
+
+        nameInput.addEventListener("input", toggleCreateButton);
 
         return todoForm;
     };
