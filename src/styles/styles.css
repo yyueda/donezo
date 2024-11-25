@@ -166,3 +166,7 @@ body {
     border-radius: 50%;
     color: #ffffff;
 }
+
+.todo-form {
+    grid-column: 2 / 3;
+}

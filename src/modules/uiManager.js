@@ -1,6 +1,4 @@
-import localStorageManager from "./localStorage.js";
 import projectManager from "./projectManager.js";
-import todoManager from "./todoManager.js";
 import addIcon from "../images/add.svg";
 import deleteIcon from "../images/bin.svg";
 
@@ -152,7 +150,68 @@ const UI = (function () {
         addTaskButton.appendChild(buttonText);
         addTaskButton.classList.add("create-task-btn");
 
+        addTaskButton.addEventListener("click", () => {
+            const projectContentContainer = document.querySelector(".project-content");
+            projectContentContainer.appendChild(createTodoForm());
+        });
+
         return addTaskButton;
+    };
+
+    const createTodoForm = () => {
+        const todoForm = document.createElement("form");
+        todoForm.classList.add("todo-form");
+
+        // Task Name
+        const nameInput = document.createElement("input");
+        nameInput.type = "text";
+        nameInput.id = "taskName";
+        nameInput.name = "taskName";
+        nameInput.placeholder = "Task Name";
+        nameInput.required = true;
+
+        // Description
+        const descriptionInput = document.createElement("input");
+        descriptionInput.type = "text";
+        descriptionInput.id = "taskDescription";
+        descriptionInput.name = "taskDescription";
+        descriptionInput.placeholder = "Description (optional)";
+
+        // Due Date
+        const dueDateLabel = document.createElement("label");
+        dueDateLabel.setAttribute("for", "dueDate");
+        dueDateLabel.textContent = "Due Date:";
+
+        const dueDateInput = document.createElement("input");
+        dueDateInput.type = "date";
+        dueDateInput.id = "dueDate";
+        dueDateInput.name = "dueDate";
+
+        // Dropdown to select priority
+        const priorityInput = document.createElement("select");
+        priorityInput.id = "priority";
+        priorityInput.name = "priority";
+
+        const options = [
+            { value: "low", text: "Low Priority" },
+            { value: "medium", text: "Medium Priority" },
+            { value: "high", text: "High Priority" }
+        ];
+
+        options.forEach(optionData => {
+            const option = document.createElement("option");
+            option.value = optionData.value;
+            option.textContent = optionData.text;
+            priorityInput.appendChild(option);
+        });
+
+        todoForm.appendChild(nameInput);
+        todoForm.appendChild(descriptionInput);
+        todoForm.appendChild(dueDateLabel);
+        todoForm.appendChild(dueDateInput);
+        todoForm.appendChild(priorityInput);
+
+        return todoForm;
     };
 
     const handleProjectElementClick = (project) => {
