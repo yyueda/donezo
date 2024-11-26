@@ -105,7 +105,7 @@ const UI = (function () {
         });
 
         // Delete Button
-        const deleteButton = createButtonWithIcon(deleteIcon, "delete-btn", () => handleDeleteClick(project.getId()));
+        const deleteButton = createButtonWithIcon(deleteIcon, "delete-btn", () => handleDeleteClick(project.getId())); //change to projects
 
         projectElement.appendChild(projectName);
         projectElement.appendChild(deleteButton)
@@ -296,11 +296,11 @@ const UI = (function () {
         const listOfTodos = project.getListOfTodos();
         
         listOfTodos.forEach((todo) => {
-            todoContainer.appendChild(createTodoDiv(todo));
+            todoContainer.appendChild(createTodoDiv(project, todo));
         });
     };
 
-    const createTodoDiv = (todo) => {
+    const createTodoDiv = (project, todo) => {
         const todoDiv = document.createElement("div");
         todoDiv.classList.add("todo")
         

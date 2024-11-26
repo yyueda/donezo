@@ -35,7 +35,11 @@ const projectManager = (function () {
         return todo;
     };
 
-    return { loadProjects, getProjects, addProject, deleteProject, addTodoToProject };
+    const deleteTodo = (project, todo) => {
+        project.deleteTodo(todo);
+    };
+
+    return { loadProjects, getProjects, addProject, deleteProject, addTodoToProject, deleteTodo };
 })();
 
 export default projectManager;

@@ -18,9 +18,9 @@ function createProject(name) {
         _listOfTodos.push(todo);
     }
 
-    const deleteTodo = (id) => {
-        _listOfTodos = _listOfTodos.filter((todo) => {
-            return todo.getId() !== id;
+    const deleteTodo = (todo) => {
+        _listOfTodos = _listOfTodos.filter((todoObj) => {
+            return todoObj !== todo;
         });
     }
 
