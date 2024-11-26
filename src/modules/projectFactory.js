@@ -18,6 +18,12 @@ function createProject(name) {
         _listOfTodos.push(todo);
     }
 
+    const deleteTodo = (id) => {
+        _listOfTodos = _listOfTodos.filter((todo) => {
+            return todo.getId() !== id;
+        });
+    }
+
     const getListOfTodos = () => [..._listOfTodos];
 
     const toJSON = () => ({
@@ -25,7 +31,7 @@ function createProject(name) {
         listOfTodos: _listOfTodos.map(todo => todo.toJSON())
     });
 
-    return { getId, getName, setName, addTodo, getListOfTodos, toJSON }
+    return { getId, getName, setName, addTodo, deleteTodo, getListOfTodos, toJSON }
 }
 
 export default createProject;

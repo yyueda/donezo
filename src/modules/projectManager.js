@@ -1,5 +1,6 @@
 import localStorageManager from "./localStorageManager.js";
 import createProject from "./projectFactory.js";
+import createTodo from "./todoFactory.js";
 
 const projectManager = (function () {
     let projects = [];
@@ -26,10 +27,13 @@ const projectManager = (function () {
         localStorageManager.updateProjectsInLocalStorage(projects);
     };
 
-    const addTodoToProject = (project, todo) => {
+    const addTodoToProject = (project, title, description, dueDate, priority) => {
+        const todo = createTodo(title, description, dueDate, priority);
         project.addTodo(todo);
         localStorageManager.updateProjectsInLocalStorage(projects);
-    };    
+
+        return todo;
+    };
 
     return { loadProjects, getProjects, addProject, deleteProject, addTodoToProject };
 })();

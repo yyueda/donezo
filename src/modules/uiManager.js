@@ -1,10 +1,10 @@
 import projectManager from "./projectManager.js";
-import todoManager from "./todoManager.js";
 import addIcon from "../images/add.svg";
 import deleteIcon from "../images/bin.svg";
 
 const UI = (function () {
     let projectsContainer;
+    let projectContent;
     let todoContainer;
     
     const initialiseUI = () => {
@@ -114,9 +114,8 @@ const UI = (function () {
     };
 
     const createProjectContent = (project) => {
-        const projectContent = document.createElement("div");
+        projectContent = document.createElement("div");
         const projectName = document.createElement("h1");
-        const formContainer = document.createElement("div");
         todoContainer = createTodoContent(project);
 
         projectName.textContent = project.getName();
@@ -124,11 +123,9 @@ const UI = (function () {
             handleProjectNameClick(project, projectContent, projectName);
         });
 
-        formContainer.classList.add("form-container");
         projectContent.classList.add("project-content");
         projectContent.appendChild(projectName);
         projectContent.appendChild(createAddTaskButton(project));
-        projectContent.appendChild(formContainer);
         projectContent.appendChild(todoContainer);
 
         return projectContent;
@@ -159,15 +156,13 @@ const UI = (function () {
         addTaskButton.classList.add("create-task-btn");
 
         addTaskButton.addEventListener("click", () => {
-            const formContainer = document.querySelector(".form-container");
-            formContainer.appendChild(createTodoForm(project));
+            projectContent.replaceChild(createTodoForm(project), addTaskButton);
         });
 
         return addTaskButton;
     };
 
     const createTodoForm = (project) => {
-        const formContainer = document.createElement("div");
         const todoForm = document.createElement("form");
         const inputContainer = document.createElement("div");
         inputContainer.classList.add("input-container");
@@ -244,7 +239,7 @@ const UI = (function () {
         cancelButton.addEventListener("click", (e) => {
             e.preventDefault();
 
-            todoForm.remove();
+            projectContent.replaceChild(createAddTaskButton(project), todoForm);
         });
 
         createButton.textContent = "Add Task";
@@ -259,8 +254,9 @@ const UI = (function () {
             const dueDate = dueDateInput.value.trim();
             const priority = priorityInput.value.trim();
 
-            const todo = todoManager.addTodo(project, title, description, dueDate, priority);
+            const todo = projectManager.addTodoToProject(project, title, description, dueDate, priority);
             todoContainer.appendChild(createTodoDiv(todo));
+            projectContent.replaceChild(createAddTaskButton(project), todoForm);
         });
 
         buttonContainer.classList.add("form-btn-container");
@@ -328,6 +324,7 @@ const UI = (function () {
         todoDiv.appendChild(todoDesc);
         todoDiv.appendChild(todoDueDate);
         todoDiv.appendChild(todoPriority);
+        todoDiv.dataset.id = todo.getId();
 
         return todoDiv;
     };

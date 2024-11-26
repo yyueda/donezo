@@ -1,8 +1,13 @@
+import { v4 as uuidv4 } from "uuid";
+
 function createTodo(title, description, dueDate, priority) {
+    let _id = uuidv4();
     let _title = title;
     let _description = description;
     let _dueDate = dueDate;
     let _priority = priority;
+
+    const getId = () => _id;
 
     const getTitle = () => _title;
     const setTitle = (title) => _title = title
@@ -23,7 +28,7 @@ function createTodo(title, description, dueDate, priority) {
         priority: _priority
     });
 
-    return { getTitle, getDescription, getDueDate, getPriority, setTitle, setDescription, setDueDate, setPriority, toJSON };
+    return { getId, getTitle, getDescription, getDueDate, getPriority, setTitle, setDescription, setDueDate, setPriority, toJSON };
 }
 
 export default createTodo;
