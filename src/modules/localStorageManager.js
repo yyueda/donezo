@@ -16,7 +16,7 @@ const localStorageManager = (function () {
                 "Clean Up",
                 "Make the bed and clean the toilet",
                 "2024-11-20",
-                1,
+                "low",
             );
             choresProject.addTodo(cleanTodo);
 

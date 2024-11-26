@@ -1,4 +1,4 @@
-function createTodo(title, description=null, dueDate=null, priority=null) {
+function createTodo(title, description, dueDate, priority) {
     let _title = title;
     let _description = description;
     let _dueDate = dueDate;

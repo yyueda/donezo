@@ -1,9 +1,11 @@
 import projectManager from "./projectManager.js";
+import todoManager from "./todoManager.js";
 import addIcon from "../images/add.svg";
 import deleteIcon from "../images/bin.svg";
 
 const UI = (function () {
     let projectsContainer;
+    let todoContainer;
     
     const initialiseUI = () => {
         projectManager.loadProjects();
@@ -95,6 +97,7 @@ const UI = (function () {
         const projectName = document.createElement("span");
         projectName.textContent = `# ${project.getName()}`;
         projectElement.setAttribute("data-id", project.getId());
+        projectElement.dataset.id = project.getId();
         projectElement.classList.add("project-item");
 
         projectElement.addEventListener("click", (e) => {
@@ -114,7 +117,7 @@ const UI = (function () {
         const projectContent = document.createElement("div");
         const projectName = document.createElement("h1");
         const formContainer = document.createElement("div");
-        const todoContainer = createTodoContent(project);
+        todoContainer = createTodoContent(project);
 
         projectName.textContent = project.getName();
         projectName.addEventListener("click", () => {
@@ -124,7 +127,7 @@ const UI = (function () {
         formContainer.classList.add("form-container");
         projectContent.classList.add("project-content");
         projectContent.appendChild(projectName);
-        projectContent.appendChild(createAddTaskButton());
+        projectContent.appendChild(createAddTaskButton(project));
         projectContent.appendChild(formContainer);
         projectContent.appendChild(todoContainer);
 
@@ -139,7 +142,7 @@ const UI = (function () {
         return buttonIcon;
     };
 
-    const createAddTaskButton = () => {
+    const createAddTaskButton = (project) => {
         const addTaskButton = document.createElement("button");
         const buttonText = document.createTextNode("Create Task");
 
@@ -157,13 +160,13 @@ const UI = (function () {
 
         addTaskButton.addEventListener("click", () => {
             const formContainer = document.querySelector(".form-container");
-            formContainer.appendChild(createTodoForm());
+            formContainer.appendChild(createTodoForm(project));
         });
 
         return addTaskButton;
     };
 
-    const createTodoForm = () => {
+    const createTodoForm = (project) => {
         const formContainer = document.createElement("div");
         const todoForm = document.createElement("form");
         const inputContainer = document.createElement("div");
@@ -171,12 +174,12 @@ const UI = (function () {
         todoForm.classList.add("todo-form");
 
         // Task Name
-        const nameInput = document.createElement("input");
-        nameInput.type = "text";
-        nameInput.id = "taskName";
-        nameInput.name = "taskName";
-        nameInput.placeholder = "Task Name";
-        nameInput.required = true;
+        const titleInput = document.createElement("input");
+        titleInput.type = "text";
+        titleInput.id = "taskName";
+        titleInput.name = "taskName";
+        titleInput.placeholder = "Task Name";
+        titleInput.required = true;
 
         // Description
         const descriptionInput = document.createElement("input");
@@ -240,6 +243,7 @@ const UI = (function () {
         cancelButton.classList.add("cancel-btn");
         cancelButton.addEventListener("click", (e) => {
             e.preventDefault();
+
             todoForm.remove();
         });
 
@@ -248,6 +252,15 @@ const UI = (function () {
         createButton.classList.add("add-task-btn");
         createButton.addEventListener("click", (e) => {
             e.preventDefault();
+
+            // Form Values
+            const title = titleInput.value.trim();
+            const description = descriptionInput.value.trim();
+            const dueDate = dueDateInput.value.trim();
+            const priority = priorityInput.value.trim();
+
+            const todo = todoManager.addTodo(project, title, description, dueDate, priority);
+            todoContainer.appendChild(createTodoDiv(todo));
         });
 
         buttonContainer.classList.add("form-btn-container");
@@ -255,7 +268,7 @@ const UI = (function () {
         buttonContainer.appendChild(createButton);
 
         // Appending to parent containers
-        inputContainer.appendChild(nameInput);
+        inputContainer.appendChild(titleInput);
         inputContainer.appendChild(descriptionInput);
         inputContainer.appendChild(secInputContainer);
         todoForm.appendChild(inputContainer);
@@ -263,14 +276,14 @@ const UI = (function () {
 
         // Disable create button when name field has nothing
         const toggleCreateButton = () => {
-            if (nameInput.value.trim() !== "") {
+            if (titleInput.value.trim() !== "") {
                 createButton.disabled = false;
             } else {
                 createButton.disabled = true;
             }
         }
 
-        nameInput.addEventListener("input", toggleCreateButton);
+        titleInput.addEventListener("input", toggleCreateButton);
 
         return todoForm;
     };
