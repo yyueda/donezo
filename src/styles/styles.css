@@ -275,6 +275,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
 }
 
 .todo-button > span {

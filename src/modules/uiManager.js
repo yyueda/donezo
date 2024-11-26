@@ -310,7 +310,7 @@ const UI = (function () {
         const todoButton = document.createElement("button");
         todoButton.classList.add("todo-button");
         const buttonBorder = document.createElement("span");
-        buttonBorder.innerHTML = `
+        const svgElement = `
             <svg width="20px" height="20px" viewBox="0 -0.5 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -320,6 +320,20 @@ const UI = (function () {
             </svg>
         `;
         todoButton.appendChild(buttonBorder);
+        todoButton.addEventListener("click", (e) => {
+            e.preventDefault();
+
+            projectManager.deleteTodo(project, todo);
+            todoDiv.remove();
+        });
+
+        todoButton.addEventListener("mouseenter", () => {
+            buttonBorder.innerHTML = svgElement;
+        });
+
+        todoButton.addEventListener("mouseleave", () => {
+            buttonBorder.innerHTML = "";
+        });
 
         // Todo Title
         const todoTitle = document.createElement("h3");
