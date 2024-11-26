@@ -37,6 +37,7 @@ const projectManager = (function () {
 
     const deleteTodo = (project, todo) => {
         project.deleteTodo(todo);
+        localStorageManager.updateProjectsInLocalStorage(projects);
     };
 
     return { loadProjects, getProjects, addProject, deleteProject, addTodoToProject, deleteTodo };

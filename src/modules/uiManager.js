@@ -145,11 +145,11 @@ const UI = (function () {
 
         addTaskButton.innerHTML = `
             <svg fill="currentColor" width="24px" height="24px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" stroke="currentColor">
-            <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
-            </g>
-            <g id="SVGRepo_iconCarrier">
-            <path d="M9,17h6v6a1,1,0,0,0,2,0V17h6a1,1,0,0,0,0-2H17V9a1,1,0,0,0-2,0v6H9a1,1,0,0,0,0,2Z"></path>
-            </g>
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
+                </g>
+                <g id="SVGRepo_iconCarrier">
+                    <path d="M9,17h6v6a1,1,0,0,0,2,0V17h6a1,1,0,0,0,0-2H17V9a1,1,0,0,0-2,0v6H9a1,1,0,0,0,0,2Z"></path>
+                </g>
             </svg>
         `;
         addTaskButton.appendChild(buttonText);
@@ -255,7 +255,7 @@ const UI = (function () {
             const priority = priorityInput.value.trim();
 
             const todo = projectManager.addTodoToProject(project, title, description, dueDate, priority);
-            todoContainer.appendChild(createTodoDiv(todo));
+            todoContainer.appendChild(createTodoDiv(project, todo));
             projectContent.replaceChild(createAddTaskButton(project), todoForm);
         });
 
@@ -303,7 +303,24 @@ const UI = (function () {
     const createTodoDiv = (project, todo) => {
         const todoDiv = document.createElement("div");
         todoDiv.classList.add("todo")
+        const todoContent = document.createElement("div");
+        todoContent.classList.add("todo-content");
         
+        // Todo Checkbox
+        const todoButton = document.createElement("button");
+        todoButton.classList.add("todo-button");
+        const buttonBorder = document.createElement("span");
+        buttonBorder.innerHTML = `
+            <svg width="20px" height="20px" viewBox="0 -0.5 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g id="SVGRepo_iconCarrier"> 
+                    <path d="M5.5 12.5L10.167 17L19.5 8" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> 
+                </g>
+            </svg>
+        `;
+        todoButton.appendChild(buttonBorder);
+
         // Todo Title
         const todoTitle = document.createElement("h3");
         todoTitle.textContent = todo.getTitle();
@@ -320,11 +337,14 @@ const UI = (function () {
         const todoPriority = document.createElement("div");
         todoPriority.textContent = todo.getPriority();
 
-        todoDiv.appendChild(todoTitle);
-        todoDiv.appendChild(todoDesc);
-        todoDiv.appendChild(todoDueDate);
-        todoDiv.appendChild(todoPriority);
+        todoContent.appendChild(todoTitle);
+        todoContent.appendChild(todoDesc);
+        todoContent.appendChild(todoDueDate);
+        todoContent.appendChild(todoPriority);
+
         todoDiv.dataset.id = todo.getId();
+        todoDiv.appendChild(todoButton);
+        todoDiv.appendChild(todoContent);
 
         return todoDiv;
     };
