@@ -1,4 +1,4 @@
-import localStorageManager from "./localStorage.js";
+import localStorageManager from "./localStorageManager.js";
 import createProject from "./projectFactory.js";
 
 const projectManager = (function () {

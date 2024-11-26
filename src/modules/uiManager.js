@@ -114,6 +114,7 @@ const UI = (function () {
         const projectContent = document.createElement("div");
         const projectName = document.createElement("h1");
         const formContainer = document.createElement("div");
+        const todoContainer = createTodoContent(project);
 
         projectName.textContent = project.getName();
         projectName.addEventListener("click", () => {
@@ -125,6 +126,7 @@ const UI = (function () {
         projectContent.appendChild(projectName);
         projectContent.appendChild(createAddTaskButton());
         projectContent.appendChild(formContainer);
+        projectContent.appendChild(todoContainer);
 
         return projectContent;
     };
@@ -271,6 +273,50 @@ const UI = (function () {
         nameInput.addEventListener("input", toggleCreateButton);
 
         return todoForm;
+    };
+
+    const createTodoContent = (project) => {
+        const todoContainer = document.createElement("div");
+        todoContainer.classList.add("todo-container");
+        renderTodosInProject(project, todoContainer);
+
+        return todoContainer;
+    };
+    
+    const renderTodosInProject = (project, todoContainer) => {
+        const listOfTodos = project.getListOfTodos();
+        
+        listOfTodos.forEach((todo) => {
+            todoContainer.appendChild(createTodoDiv(todo));
+        });
+    };
+
+    const createTodoDiv = (todo) => {
+        const todoDiv = document.createElement("div");
+        todoDiv.classList.add("todo")
+        
+        // Todo Title
+        const todoTitle = document.createElement("h3");
+        todoTitle.textContent = todo.getTitle();
+
+        // Todo Description
+        const todoDesc = document.createElement("p");
+        todoDesc.textContent = todo.getDescription();
+
+        // Todo Due Date
+        const todoDueDate = document.createElement("div");
+        todoDueDate.textContent = todo.getDueDate();
+
+        // Todo Priority
+        const todoPriority = document.createElement("div");
+        todoPriority.textContent = todo.getPriority();
+
+        todoDiv.appendChild(todoTitle);
+        todoDiv.appendChild(todoDesc);
+        todoDiv.appendChild(todoDueDate);
+        todoDiv.appendChild(todoPriority);
+
+        return todoDiv;
     };
 
     const handleProjectElementClick = (project) => {

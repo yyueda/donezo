@@ -12,12 +12,12 @@ const localStorageManager = (function () {
 
         if (!projectsData) {
             const choresProject = createProject("chores");
-            const cleanTodo = createTodo({
-                title: "Clean Up",
-                description: "Make the bed and clean the toilet",
-                dueDate: "2024-11-20",
-                priority: 1,
-            });
+            const cleanTodo = createTodo(
+                "Clean Up",
+                "Make the bed and clean the toilet",
+                "2024-11-20",
+                1,
+            );
             choresProject.addTodo(cleanTodo);
 
             const defaultProjects = [choresProject];
