@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import localStorageManager from "./localStorageManager.js";
 import createProject from "./projectFactory.js";
 import createTodo from "./todoFactory.js";
@@ -28,7 +29,8 @@ const projectManager = (function () {
     };
 
     const addTodoToProject = (project, title, description, dueDate, priority) => {
-        const todo = createTodo(title, description, dueDate, priority);
+        const formattedDate = format(dueDate, "dd/MM/yyyy");
+        const todo = createTodo(title, description, formattedDate, priority);
         project.addTodo(todo);
         localStorageManager.updateProjectsInLocalStorage(projects);
 

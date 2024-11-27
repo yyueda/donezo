@@ -1,5 +1,6 @@
 import createProject from "./projectFactory.js";
 import createTodo from "./todoFactory.js";
+import { add, format } from "date-fns";
 
 const localStorageManager = (function () {
     const updateProjectsInLocalStorage = (projects) => {
@@ -12,10 +13,13 @@ const localStorageManager = (function () {
 
         if (!projectsData) {
             const choresProject = createProject("chores");
+            const dueDate = add(new Date(), {
+                days: 3
+            });
             const cleanTodo = createTodo(
                 "Clean Up",
                 "Make the bed and clean the toilet",
-                "2024-11-20",
+                format(dueDate, "dd/MM/yyyy"),
                 "low",
             );
             choresProject.addTodo(cleanTodo);
