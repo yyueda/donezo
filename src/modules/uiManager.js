@@ -1,7 +1,7 @@
 import projectManager from "./projectManager.js";
 import addIcon from "../images/add.svg";
 import deleteIcon from "../images/bin.svg";
-import flagIcon from "../images/flag.svg"
+import donezo from "../images/Donezo.png";
 
 const UI = (function () {
     let projectsContainer;
@@ -29,9 +29,9 @@ const UI = (function () {
 
         // Logo Section
         const logo = document.createElement("div");
-        const logoHeader = document.createElement("div");
-        logoHeader.textContent = "Donezo";
-        logo.appendChild(logoHeader);
+        const logoImage = document.createElement("img");
+        logoImage.src = donezo;
+        logo.appendChild(logoImage);
         logo.classList.add("logo");
 
         // Projects Section

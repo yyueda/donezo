@@ -73,6 +73,10 @@ body {
     font-size: 0.9rem;
 }
 
+.logo img {
+    width: 80px;
+}
+
 .projects-header {
     display: flex;
     justify-content: space-between;
