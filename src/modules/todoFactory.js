@@ -1,7 +1,4 @@
-import { v4 as uuidv4 } from "uuid";
-
 function createTodo(title, description, dueDate, priority) {
-    let _id = uuidv4();
     let _title = title;
     let _description = description;
     let _dueDate = dueDate;

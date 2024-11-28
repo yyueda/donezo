@@ -215,7 +215,7 @@ const UI = (function () {
         options.forEach(optionData => {
             const option = document.createElement("option");
             option.value = optionData.value;
-            
+
             if (option.value === "high") {
                 option.classList.add("high");
             } else if (option.value === "medium") {
@@ -352,11 +352,12 @@ const UI = (function () {
 
         // Todo Due Date
         const todoDueDate = document.createElement("div");
-        todoDueDate.textContent = todo.getDueDate();
+        todoDueDate.classList.add("due-date");
+        todoDueDate.textContent = `Due on: ${todo.getDueDate()}`;
 
         // Todo Priority
-        const todoPriority = document.createElement("div");
-        todoPriority.textContent = todo.getPriority();
+        // const todoPriority = document.createElement("div");
+        // todoPriority.textContent = todo.getPriority();
         if (todo.getPriority() == "high") {
             todoButton.classList.add("high-priority");
         } else if (todo.getPriority() == "medium") {
@@ -366,9 +367,8 @@ const UI = (function () {
         todoContent.appendChild(todoTitle);
         todoContent.appendChild(todoDesc);
         todoContent.appendChild(todoDueDate);
-        todoContent.appendChild(todoPriority);
+        // todoContent.appendChild(todoPriority);
 
-        todoDiv.dataset.id = todo.getId();
         todoDiv.appendChild(todoButton);
         todoDiv.appendChild(todoContent);
 

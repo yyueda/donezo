@@ -35,6 +35,7 @@ p, h1, h2, h3, h4, h5, h6 {
     --light-black: rgb(78, 78, 78);
     --grey: rgb(32, 32, 32);
     --light-grey: rgb(146, 146, 146);
+    --grey-border: rgba(146, 146, 146, 0.2);
     --create-task-svg: #ff1700;
     --create-task-svg-hover: #dc4c3e;
     --add-btn-disabled: #eda59e;
@@ -132,7 +133,7 @@ body {
 }
 
 .project-content > h1:hover {
-    border-color: rgba(146, 146, 146, 0.2);
+    border-color: var(--grey-border);
 }
 
 .project-content > h1, .project-name-input {
@@ -282,7 +283,24 @@ body {
 .todo {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 16px;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    padding: 12px;
+}
+
+.todo:hover {
+    border-color: var(--grey-border);
+}
+
+.todo-content {
+    border-left: 1px solid var(--grey-border);
+    padding-left: 12px;
+}
+
+.due-date {
+    margin-top: 12px;
+    font-size: 0.8rem;
 }
 
 /* Base styles for checkbox */
