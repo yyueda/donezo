@@ -29,7 +29,7 @@ const projectManager = (function () {
     };
 
     const addTodoToProject = (project, title, description, dueDate, priority) => {
-        const formattedDate = format(dueDate, "dd/MM/yyyy");
+        const formattedDate = dueDate ? format(dueDate, "dd/MM/yyyy") : "";
         const todo = createTodo(title, description, formattedDate, priority);
         project.addTodo(todo);
         localStorageManager.updateProjectsInLocalStorage(projects);

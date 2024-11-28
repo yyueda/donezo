@@ -350,6 +350,11 @@ const UI = (function () {
         // Todo Priority
         const todoPriority = document.createElement("div");
         todoPriority.textContent = todo.getPriority();
+        if (todo.getPriority() == "high") {
+            todoButton.classList.add("high-priority");
+        } else if (todo.getPriority() == "medium") {
+            todoButton.classList.add("medium-priority");
+        }
 
         todoContent.appendChild(todoTitle);
         todoContent.appendChild(todoDesc);
