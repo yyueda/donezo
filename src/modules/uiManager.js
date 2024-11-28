@@ -1,6 +1,7 @@
 import projectManager from "./projectManager.js";
 import addIcon from "../images/add.svg";
 import deleteIcon from "../images/bin.svg";
+import flagIcon from "../images/flag.svg"
 
 const UI = (function () {
     let projectsContainer;
@@ -177,8 +178,7 @@ const UI = (function () {
         titleInput.required = true;
 
         // Description
-        const descriptionInput = document.createElement("input");
-        descriptionInput.type = "text";
+        const descriptionInput = document.createElement("textarea");
         descriptionInput.id = "taskDescription";
         descriptionInput.name = "taskDescription";
         descriptionInput.placeholder = "Description";
@@ -215,6 +215,13 @@ const UI = (function () {
         options.forEach(optionData => {
             const option = document.createElement("option");
             option.value = optionData.value;
+            
+            if (option.value === "high") {
+                option.classList.add("high");
+            } else if (option.value === "medium") {
+                option.classList.add("medium");
+            }
+
             option.textContent = optionData.text;
             priorityInput.appendChild(option);
         });
@@ -279,7 +286,7 @@ const UI = (function () {
             }
         }
 
-        titleInput.addEventListener("input", toggleCreateButton);
+        titleInput.addEventListener("input", toggleCreateButton)
 
         return todoForm;
     };
