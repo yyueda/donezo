@@ -58,9 +58,10 @@ const Todo = (function () {
 
     const createTodoForm = (project) => {
         const todoForm = document.createElement("form");
+        todoForm.autocomplete = "off";
+        todoForm.classList.add("todo-form");
         const inputContainer = document.createElement("div");
         inputContainer.classList.add("input-container");
-        todoForm.classList.add("todo-form");
 
         // Task Name
         const titleInput = document.createElement("input");
