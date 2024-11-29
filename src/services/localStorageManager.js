@@ -1,5 +1,5 @@
-import createProject from "./projectFactory.js";
-import createTodo from "./todoFactory.js";
+import createProject from "../factories/projectFactory.js";
+import createTodo from "../factories/todoFactory.js";
 import { add, format } from "date-fns";
 
 const localStorageManager = (function () {

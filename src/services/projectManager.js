@@ -1,7 +1,7 @@
 import { format } from "date-fns";
 import localStorageManager from "./localStorageManager.js";
-import createProject from "./projectFactory.js";
-import createTodo from "./todoFactory.js";
+import createProject from "../factories/projectFactory.js";
+import createTodo from "../factories/todoFactory.js";
 
 const projectManager = (function () {
     let projects = [];
