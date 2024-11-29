@@ -36,6 +36,7 @@ p, h1, h2, h3, h4, h5, h6 {
     --grey: rgb(32, 32, 32);
     --light-grey: rgb(146, 146, 146);
     --grey-border: rgba(146, 146, 146, 0.2);
+    --button-hover: rgba(255, 255, 255, 0.055);
     --create-task-svg: #ff1700;
     --create-task-svg-hover: #dc4c3e;
     --add-btn-disabled: #eda59e;
@@ -92,7 +93,7 @@ body {
 }
 
 .projects-header:hover, .projects-container > div:hover, .add-btn:hover, .delete-btn:hover {
-    background-color: rgba(255, 255, 255, 0.055);
+    background-color: var(--button-hover);
 }
 
 .project-item {
@@ -111,12 +112,12 @@ body {
 
 .btn-container, .project-item > img {
     opacity: 0;
-    pointer-events: none;
+    visibility: hidden;
 }
 
 .projects-header:hover .btn-container, .project-item:hover > img {
     opacity: 1;
-    pointer-events: auto;
+    visibility: visible;
 }
 
 /* MAIN CONTENT */
@@ -299,6 +300,11 @@ body {
     border-color: var(--grey-border);
 }
 
+.todo:hover > .edit-btn {
+    opacity: 1;
+    visibility: visible;
+}
+
 .todo-content {
     border-left: 1px solid var(--grey-border);
     padding-left: 12px;
@@ -316,6 +322,29 @@ body {
     width: 24px;
     height: auto;
     color: var(--light-grey);
+}
+
+.edit-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4px;
+    width: 28px;
+    height: 28px;
+    background: none;
+    border: none;
+    color: var(--light-grey);
+    align-self: flex-start;
+    margin-left: auto;
+    cursor: pointer;
+    border-radius: 6px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.edit-btn:hover {
+    background-color: rgba(255, 255, 255, 0.055);
 }
 
 /* Base styles for checkbox */
