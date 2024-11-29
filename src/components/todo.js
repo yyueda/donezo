@@ -1,3 +1,4 @@
+import { format, parse } from "date-fns";
 import projectManager from "../services/projectManager";
 
 const Todo = (function () {
@@ -50,13 +51,32 @@ const Todo = (function () {
         addTaskButton.classList.add("create-task-btn");
 
         addTaskButton.addEventListener("click", () => {
-            projectContent.replaceChild(createTodoForm(project), addTaskButton);
+            const todoForm = createTodoForm(
+                project,
+                null,
+                (newTodoData, todoForm) => {
+                    const newTodo = projectManager.addTodoToProject(
+                        project,
+                        newTodoData.title,
+                        newTodoData.description,
+                        newTodoData.dueDate,
+                        newTodoData.priority
+                    );
+                    document.querySelector(".todo-container").appendChild(createTodoItem(newTodo, project));
+                    todoForm.replaceWith(createAddTaskButton(project));
+                },
+                (todoForm) => {
+                    todoForm.replaceWith(createAddTaskButton(project));
+                }
+            );
+
+            projectContent.replaceChild(todoForm, addTaskButton);
         });
 
         return addTaskButton;
     };
 
-    const createTodoForm = (project) => {
+    const createTodoForm = (project, todo = null, onSubmit, onCancel) => {
         const todoForm = document.createElement("form");
         todoForm.autocomplete = "off";
         todoForm.classList.add("todo-form");
@@ -70,12 +90,14 @@ const Todo = (function () {
         titleInput.name = "taskName";
         titleInput.placeholder = "Task Name";
         titleInput.required = true;
+        titleInput.value = todo ? todo.getTitle() : ""; // Pre-fill for editing
 
         // Description
         const descriptionInput = document.createElement("textarea");
         descriptionInput.id = "taskDescription";
         descriptionInput.name = "taskDescription";
         descriptionInput.placeholder = "Description";
+        descriptionInput.value = todo ? todo.getDescription() : ""; // Pre-fill for editing
 
         // Due Date
         const dueDateLabel = document.createElement("label");
@@ -87,11 +109,18 @@ const Todo = (function () {
         dueDateInput.id = "dueDate";
         dueDateInput.name = "dueDate";
 
+        if (todo && todo.getDueDate()) {
+            const parsedDate = parse(todo.getDueDate(), "dd/MM/yyyy", new Date());
+            const formattedDate = format(parsedDate, "yyyy-MM-dd")
+            console.log(formattedDate)
+            dueDateInput.value = formattedDate; // Pre-fill for editing
+        }
+
         const dueDateContainer = document.createElement("div");
         dueDateContainer.appendChild(dueDateLabel);
         dueDateContainer.appendChild(dueDateInput);
 
-        // Dropdown to select priority
+        // Priority Dropdown
         const priorityLabel = document.createElement("label");
         priorityLabel.setAttribute("for", "priority");
         priorityLabel.textContent = "Priority:"
@@ -109,14 +138,15 @@ const Todo = (function () {
         options.forEach(optionData => {
             const option = document.createElement("option");
             option.value = optionData.value;
-
+            option.textContent = optionData.text;
             if (option.value === "high") {
                 option.classList.add("high");
             } else if (option.value === "medium") {
                 option.classList.add("medium");
             }
-
-            option.textContent = optionData.text;
+            if (todo && todo.getPriority() === optionData.value) {
+                option.selected = true; // Pre-select for editing
+            }
             priorityInput.appendChild(option);
         });
 
@@ -126,43 +156,40 @@ const Todo = (function () {
 
         // Container for due date and priority inputs
         const secInputContainer = document.createElement("div");
+        secInputContainer.classList.add("sec-input-container");
         secInputContainer.appendChild(dueDateContainer);
         secInputContainer.appendChild(priorityContainer);
-        secInputContainer.classList.add("sec-input-container");
 
         // Form Buttons
         const buttonContainer = document.createElement("div");
         const cancelButton = document.createElement("button");
-        const createButton = document.createElement("button");
+        const submitButton = document.createElement("button");
 
         cancelButton.textContent = "Cancel";
         cancelButton.classList.add("cancel-btn");
         cancelButton.addEventListener("click", (e) => {
             e.preventDefault();
-
-            projectContent.replaceChild(createAddTaskButton(project), todoForm);
+            if (onCancel) onCancel(todoForm); // Call the provided cancel callback
         });
 
-        createButton.textContent = "Add Task";
-        createButton.disabled = true;
-        createButton.classList.add("add-task-btn");
-        createButton.addEventListener("click", (e) => {
+        submitButton.textContent = todo ? "Save" : "Add Task"; // Adjust text for create or edit
+        submitButton.classList.add("add-task-btn");
+        submitButton.disabled = !todo && titleInput.value.trim() === ""; // Disable if empty for new
+
+        submitButton.addEventListener("click", (e) => {
             e.preventDefault();
-
-            // Form Values
-            const title = titleInput.value.trim();
-            const description = descriptionInput.value.trim();
-            const dueDate = dueDateInput.value.trim();
-            const priority = priorityInput.value.trim();
-
-            const todo = projectManager.addTodoToProject(project, title, description, dueDate, priority);
-            todosContainer.appendChild(createTodoItem(todo, project));
-            projectContent.replaceChild(createAddTaskButton(project), todoForm);
+            const updatedTodoData = {
+                title: titleInput.value.trim(),
+                description: descriptionInput.value.trim(),
+                dueDate: dueDateInput.value.trim(),
+                priority: priorityInput.value
+            };
+            onSubmit(updatedTodoData, todoForm); // Call the provided submit callback
         });
 
         buttonContainer.classList.add("form-btn-container");
         buttonContainer.appendChild(cancelButton);
-        buttonContainer.appendChild(createButton);
+        buttonContainer.appendChild(submitButton);
 
         // Appending to parent containers
         inputContainer.appendChild(titleInput);
@@ -172,15 +199,15 @@ const Todo = (function () {
         todoForm.appendChild(buttonContainer);
 
         // Disable create button when name field has nothing
-        const toggleCreateButton = () => {
+        const toggleSubmitButton = () => {
             if (titleInput.value.trim() !== "") {
-                createButton.disabled = false;
+                submitButton.disabled = false;
             } else {
-                createButton.disabled = true;
+                submitButton.disabled = true;
             }
         }
 
-        titleInput.addEventListener("input", toggleCreateButton)
+        titleInput.addEventListener("input", toggleSubmitButton)
 
         return todoForm;
     };
@@ -273,6 +300,26 @@ const Todo = (function () {
         editButton.innerHTML = editSvg;
         editButton.addEventListener("click", (e) => {
             e.preventDefault();
+
+            const todoForm = createTodoForm(
+                project,
+                todo,
+                (updatedTodoData, todoForm) => {
+                    todo.setTitle(updatedTodoData.title);
+                    todo.setDescription(updatedTodoData.description);
+                    const formattedDate = updatedTodoData.dueDate ? format(updatedTodoData.dueDate, "dd/MM/yyyy") : "";
+                    todo.setDueDate(formattedDate);
+                    todo.setPriority(updatedTodoData.priority);
+
+                    const updatedTodoDiv = createTodoItem(todo, project);
+                    todoForm.replaceWith(updatedTodoDiv);
+                },
+                (todoForm) => {
+                    todoForm.replaceWith(createTodoItem(todo, project))
+                }
+            );
+
+            todoDiv.replaceWith(todoForm);
         })
 
         todoContent.appendChild(todoTitle);
