@@ -112,7 +112,6 @@ const Todo = (function () {
         if (todo && todo.getDueDate()) {
             const parsedDate = parse(todo.getDueDate(), "dd/MM/yyyy", new Date());
             const formattedDate = format(parsedDate, "yyyy-MM-dd")
-            console.log(formattedDate)
             dueDateInput.value = formattedDate; // Pre-fill for editing
         }
 
