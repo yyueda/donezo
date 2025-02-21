@@ -9,4 +9,4 @@ Welcome to **Donezo**, a sleek and efficient to-do list web application designed
 - Intuitive and responsive user interface.
 
 ## **Live Demo**  
-Check out the live application [here](https://yyueda.github.io/todo-list/).
+Check out the live application [here](https://yyueda.github.io/donezo/).
